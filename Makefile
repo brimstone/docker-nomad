@@ -1,14 +1,20 @@
-.PHONY: all build docker-image docker-push
+.PHONY: all docker-image docker-push
 GOPATH=${PWD}
 
-all: build docker-image docker-push
+all: nomad docker-image docker-image-server docker-image-client docker-push
 
-build:
+nomad:
 	cd src/github.com/hashicorp/nomad; go get -v -d
 	CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags '-s' github.com/hashicorp/nomad
 
-docker-image:
+docker-image: nomad
 	docker build -t brimstone/nomad .
+
+docker-image-server: nomad
+	docker build -t brimstone/nomad:server -f Dockefile.server .
+
+docker-image-client: nomad
+	docker build -t brimstone/nomad:client -f Dockefile.client .
 
 docker-push:
 	@docker login -e="${DOCKER_EMAIL}" -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
