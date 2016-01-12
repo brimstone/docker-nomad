@@ -1,0 +1,3 @@
+[submodule "src/github.com/hashicorp/nomad"]
+	path = src/github.com/hashicorp/nomad
+	url = https://github.com/hashicorp/nomad.git
