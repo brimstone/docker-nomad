@@ -3,7 +3,6 @@ language: go
 go:
  - 1.5
 
-sudo: required
 services:
  -  docker
 
