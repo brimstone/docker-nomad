@@ -1,3 +1,7 @@
 FROM brimstone/nomad
 
-ENTRYPOINT ["/bin/nomad", "agent", "-server", "-data-dir", "/data"]
+EXPOSE 4647
+
+ADD server-loader /
+
+ENTRYPOINT ["/bin/nomad", "agent", "-config", "/config.hcl"]
