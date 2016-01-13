@@ -4,4 +4,4 @@ EXPOSE 4647
 
 ADD server-loader /
 
-ENTRYPOINT ["/bin/nomad", "agent", "-config", "/config.hcl"]
+ENTRYPOINT ["/server-loader"]
