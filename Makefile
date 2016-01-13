@@ -5,7 +5,7 @@ all: nomad docker-image docker-image-server docker-image-client docker-push
 
 nomad:
 	cd src/github.com/hashicorp/nomad; go get -v -d
-	CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags '-s' github.com/hashicorp/nomad
+	go build -a -installsuffix cgo -ldflags '-extldflags "-static"' github.com/hashicorp/nomad
 
 docker-image: nomad
 	docker build -t brimstone/nomad .
