@@ -11,10 +11,10 @@ docker-image: nomad
 	docker build -t brimstone/nomad .
 
 docker-image-server: nomad
-	docker build -t brimstone/nomad:server -f Dockefile.server .
+	docker build -t brimstone/nomad:server -f Dockerfile.server .
 
 docker-image-client: nomad
-	docker build -t brimstone/nomad:client -f Dockefile.client .
+	docker build -t brimstone/nomad:client -f Dockerfile.client .
 
 docker-push:
 	@docker login -e="${DOCKER_EMAIL}" -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
