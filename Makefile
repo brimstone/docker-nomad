@@ -1,4 +1,4 @@
-.PHONY: all docker-image docker-push
+.PHONY: all docker-image docker-image-server docker-image-client docker-push test-server test-client
 GOPATH=${PWD}
 
 all: nomad docker-image docker-image-server docker-image-client docker-push
@@ -19,3 +19,9 @@ docker-image-client: nomad
 docker-push:
 	@docker login -e="${DOCKER_EMAIL}" -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
 	docker push brimstone/nomad
+
+test-server:
+	docker run -d --name nomad brimstone/nomad:server -bootstrap-expect=1
+
+test-client:
+	docker run -d --name client -v /var/run/docker.sock:/var/run/docker.sock brimstone/nomad:client -servers $(shell docker inspect -f '{{.NetworkSettings.IPAddress}}' nomad):4647 -log-level=DEBUG
