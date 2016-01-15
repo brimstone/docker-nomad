@@ -5,7 +5,7 @@ all: nomad docker-image docker-image-server docker-image-client docker-push
 
 nomad:
 	cd src/github.com/hashicorp/nomad; go get -v -d
-	docker run --rm -it -v $PWD:/go -u $UID:$GID brimstone/golang-musl github.com/hashicorp/nomad
+	docker run --rm -it -v "${PWD}:/go" -u "${UID}:${GID}" brimstone/golang-musl github.com/hashicorp/nomad
 
 docker-image: nomad
 	docker build -t brimstone/nomad .
