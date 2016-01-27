@@ -9,26 +9,26 @@ nomad:
 	| tar -x ./nomad
 
 docker-image: nomad
-	docker build -t brimstone/nomad .
+	docker build -t brimstone/nomad:0.2.3 .
 
 docker-image-server: nomad
-	docker build -t brimstone/nomad:0.2.3server -f Dockerfile.server .
+	docker build -t brimstone/nomad:0.2.3-server -f Dockerfile.server .
 
 docker-image-client: nomad
-	docker build -t brimstone/nomad:0.2.3client -f Dockerfile.client .
+	docker build -t brimstone/nomad:0.2.3-client -f Dockerfile.client .
 
 docker-push:
 	@docker login -e="${DOCKER_EMAIL}" -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
 	docker push brimstone/nomad
 
 test-server:
-	docker run -d --name nomad brimstone/nomad:0.2.3server -bootstrap-expect=1
+	docker run -d --name nomad brimstone/nomad:0.2.3-server -bootstrap-expect=1
 
 test-client:
 	docker run -d --name client \
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	--net host \
-	brimstone/nomad:0.2.3client \
+	brimstone/nomad:0.2.3-client \
 	-servers $(shell docker inspect -f '{{.NetworkSettings.IPAddress}}' nomad):4647 \
 	-log-level=DEBUG
 
