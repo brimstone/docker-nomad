@@ -31,3 +31,14 @@ test-client:
 	brimstone/nomad:client \
 	-servers $(shell docker inspect -f '{{.NetworkSettings.IPAddress}}' nomad):4647 \
 	-log-level=DEBUG
+
+test-job: example.nomad
+	docker run --rm -i -v "${PWD}:${PWD}" -w "${PWD}" \
+	brimstone/nomad \
+	run -address http://$(shell docker inspect -f '{{.NetworkSettings.IPAddress}}' nomad):4646 \
+	example.nomad
+
+example.nomad:
+	docker run --rm -i -v "${PWD}:${PWD}" -w "${PWD}" -u "${UID}:${GID}" \
+	brimstone/nomad \
+	init
