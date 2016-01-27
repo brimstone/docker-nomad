@@ -1,3 +1,3 @@
-FROM brimstone/nomad
+FROM brimstone/nomad:0.2.3
 
 ENTRYPOINT ["/bin/nomad", "agent", "-client", "-data-dir", "/data"]

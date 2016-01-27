@@ -1,4 +1,4 @@
-FROM brimstone/nomad
+FROM brimstone/nomad:0.2.3
 
 EXPOSE 4647
 
